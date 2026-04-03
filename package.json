@@ -1,0 +1,26 @@
+{
+  "name": "nutriscan",
+  "version": "1.0.0",
+  "description": "AI-Powered Food Analysis Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build:css": "sass public/css/style.scss public/css/style.css",
+    "import-food": "node scripts/importFoodItems.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "csv-parser": "^3.2.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.3.3",
+    "multer": "^2.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "sass": "^1.93.2"
+  }
+}

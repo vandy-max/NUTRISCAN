@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan | Authentication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#06D6A0',
+                        danger: '#EF4444',
+                        warning: '#F59E0B',
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkbg text-white min-h-screen flex items-center justify-center p-4">
+    <div class="container max-w-6xl mx-auto">
+        <!-- Back Button -->
+        <a href="index.html" class="inline-flex items-center text-gray-400 hover:text-white mb-8 transition-colors duration-200">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Back to Home
+        </a>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <!-- Left Side - Branding (hidden on small screens for focus) -->
+            <div class="text-center lg:text-left">
+                <h1 class="text-5xl lg:text-6xl font-extrabold mb-6">
+                    <span class="text-primary">Nutri</span><span class="text-secondary">Scan</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-4">Your journey to better health starts here.</p>
+                <p class="text-lg text-gray-400">
+                    Join thousands of users who are transforming their health with AI-powered food analysis and personalized nutrition insights.
+                </p>
+                
+                <!-- Features List -->
+                <div class="mt-8 space-y-4">
+                    <div class="flex items-center text-gray-300">
+                        <svg class="w-6 h-6 text-secondary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        AI-Powered Food Analysis
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <svg class="w-6 h-6 text-secondary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Personalized Health Insights
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <svg class="w-6 h-6 text-secondary mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Smart Recipe Recommendations
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Authentication Forms -->
+            <div class="w-full max-w-md mx-auto lg:mx-0">
+                <!-- Login Form -->
+                <div id="loginForm" class="flash-card">
+                    <h2 class="text-3xl font-bold text-center text-white mb-2">Welcome Back</h2>
+                    <p class="text-gray-400 text-center mb-8">Sign in to your account</p>
+                    
+                    <form id="loginFormElement">
+                        <div class="form-group">
+                            <label for="loginEmail" class="text-white">Email Address</label>
+                            <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword" class="text-white">Password</label>
+                            <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-full py-3 text-lg">
+                            Sign In
+                        </button>
+                    </form>
+                    
+                    <p class="text-center text-gray-400 mt-6">
+                        Don't have an account? 
+                        <a href="#" onclick="showSignup()" class="text-primary hover:text-secondary transition-colors duration-200 font-semibold">Sign up here</a>
+                    </p>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signupForm" class="flash-card hidden">
+                    <h2 class="text-3xl font-bold text-center text-white mb-2">Create Account</h2>
+                    <p class="text-gray-400 text-center mb-8">Join NutriScan today</p>
+                    
+                    <form id="signupFormElement">
+                        <div class="form-group">
+                            <label for="signupUsername" class="text-white">Username</label>
+                            <input type="text" id="signupUsername" class="form-input" placeholder="Choose a username" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupEmail" class="text-white">Email Address</label>
+                            <input type="email" id="signupEmail" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signupPassword" class="text-white">Password</label>
+                            <input type="password" id="signupPassword" class="form-input" placeholder="Create a password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword" class="text-white">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-full py-3 text-lg">
+                            Create Account
+                        </button>
+                    </form>
+                    
+                    <p class="text-center text-gray-400 mt-6">
+                        Already have an account? 
+                        <a href="#" onclick="showLogin()" class="text-primary hover:text-secondary transition-colors duration-200 font-semibold">Sign in here</a>
+                    </p>
+                </div>
+
+                <!-- Alert Messages -->
+                <div id="alertMessage" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/local-api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan | Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#06D6A0',
+                        danger: '#EF4444',
+                        warning: '#F59E0B',
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkbg text-white min-h-screen flex items-center justify-center p-4">
+    <!-- Welcome Popup -->
+    <div id="welcomePopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div class="bg-cardbg p-8 rounded-2xl shadow-2xl max-w-md w-full mx-4 text-center border border-primary/20">
+            <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl font-bold text-white">NS</span>
+            </div>
+            <h2 class="text-3xl font-bold text-primary mb-4">Welcome to NutriScan!</h2>
+            <p class="text-gray-300 mb-6">Your AI-powered food analysis companion. Get detailed nutritional insights tailored to your health goals.</p>
+            <button onclick="closePopup()" class="bg-gradient-to-r from-primary to-secondary hover:from-purple-600 hover:to-green-500 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                Get Started
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="text-center hidden animate-fade-in">
+        <div class="mb-8">
+            <h1 class="text-6xl md:text-7xl font-extrabold mb-4">
+                <span class="text-primary">Nutri</span><span class="text-secondary">Scan</span>
+            </h1>
+            <p class="text-xl text-gray-400 mb-2">Intelligent Food Analysis</p>
+            <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+        </div>
+        
+        <p class="text-lg text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+            Analyze any food with AI-powered precision. Get personalized nutritional insights, 
+            recipe alterations, and health recommendations based on your unique profile.
+        </p>
+        
+        <div class="space-y-4 md:space-y-0 md:space-x-6 md:flex md:justify-center">
+            <a href="auth.html?type=login" class="block md:inline-block">
+                <button class="bg-cardbg hover:bg-slate-700 border border-primary/30 text-primary font-bold text-lg py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 w-full md:w-auto">
+                    Sign In
+                </button>
+            </a>
+            <a href="auth.html?type=signup" class="block md:inline-block">
+                <button class="bg-gradient-to-r from-primary to-secondary hover:from-purple-600 hover:to-green-500 text-white font-bold text-lg py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg w-full md:w-auto">
+                    Create Account
+                </button>
+            </a>
+        </div>
+
+        <!-- Features Flash Cards -->
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div class="bg-cardbg p-6 rounded-xl border border-primary/20 hover:border-primary/40 transition-all duration-300">
+                <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                    <span class="text-primary text-xl">🔍</span>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Smart Analysis</h3>
+                <p class="text-gray-400">AI-powered food recognition and nutritional breakdown</p>
+            </div>
+            
+            <div class="bg-cardbg p-6 rounded-xl border border-secondary/20 hover:border-secondary/40 transition-all duration-300">
+                <div class="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mb-4">
+                    <span class="text-secondary text-xl">🎯</span>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Personalized</h3>
+                <p class="text-gray-400">Tailored recommendations based on your health profile</p>
+            </div>
+            
+            <div class="bg-cardbg p-6 rounded-xl border border-warning/20 hover:border-warning/40 transition-all duration-300">
+                <div class="w-12 h-12 bg-warning/20 rounded-lg flex items-center justify-center mb-4">
+                    <span class="text-warning text-xl">⚡</span>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Instant Results</h3>
+                <p class="text-gray-400">Real-time analysis and recipe suggestions</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function closePopup() {
+            document.getElementById('welcomePopup').style.display = 'none';
+            document.getElementById('mainContent').classList.remove('hidden');
+            // Add fade-in animation
+            setTimeout(() => {
+                document.getElementById('mainContent').style.opacity = '1';
+            }, 50);
+        }
+
+        // Add some animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const popup = document.getElementById('welcomePopup');
+            popup.style.opacity = '0';
+            popup.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                popup.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+   
+
+
+
+<script src="js/local-api.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchForm = document.getElementById('search-form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const query = document.getElementById('search-input').value;
+            const searchBtn = searchForm.querySelector('button');
+            
+            searchBtn.textContent = 'Searching...';
+            searchBtn.disabled = true;
+            
+            const result = await window.nutriScanAPI.searchFood(query);
+            displaySearchResults(result);
+            
+            searchBtn.textContent = 'Search';
+            searchBtn.disabled = false;
+        });
+    }
+
+    
+
+function displaySearchResults(result) {
+    const resultsDiv = document.getElementById('search-results');
+    if (!resultsDiv) return;
+
+    if (result.success && result.data.length > 0) {
+        let html = '<h3>Search Results:</h3><div class="food-results">';
+        result.data.forEach(food => {
+            html += `
+                <div class="food-item card">
+                    <h4>${food.name}</h4>
+                    <div class="food-details">
+                        <p><strong>Category:</strong> ${food.category}</p>
+                        <p><strong>Calories:</strong> ${food.calories} kcal per 100g</p>
+                        <div class="nutrition-facts">
+                            <span><strong>Protein:</strong> ${food.protein}g</span>
+                            <span><strong>Carbs:</strong> ${food.carbs}g</span>
+                            <span><strong>Fat:</strong> ${food.fat}g</span>
+                        </div>
+                        <p><strong>Vitamins:</strong> ${Array.isArray(food.vitamins) ? food.vitamins.join(', ') : food.vitamins || 'N/A'}</p>
+                        <p><strong>Minerals:</strong> ${Array.isArray(food.minerals) ? food.minerals.join(', ') : food.minerals || 'N/A'}</p>
+                        <p><strong>Suitable for:</strong> ${Array.isArray(food.suitable_for) ? food.suitable_for.join(', ') : food.suitable_for || 'N/A'}</p>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        resultsDiv.innerHTML = html;
+    } else {
+        resultsDiv.innerHTML = '<div class="no-results"><p>No results found. Try different keywords like "apple", "chicken", "vegetable", etc.</p></div>';
+    }
+}
+
+});
+</script>
+</body>
+</html>

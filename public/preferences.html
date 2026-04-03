@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan | User Preferences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#06D6A0',
+                        danger: '#EF4444',
+                        warning: '#F59E0B',
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkbg text-white min-h-screen py-8">
+    <div class="container max-w-4xl mx-auto px-4">
+        <!-- Progress Bar -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-3xl font-bold text-gradient">Complete Your Profile</h1>
+                <span id="progressText" class="text-gray-400">Step 1 of 4</span>
+            </div>
+            <div class="w-full bg-gray-700 rounded-full h-3">
+                <div id="progressBar" class="bg-gradient-to-r from-primary to-secondary h-3 rounded-full transition-all duration-500" style="width: 25%"></div>
+            </div>
+        </div>
+
+        <!-- Multi-step Form -->
+        <form id="preferencesForm">
+            <!-- Step 1: Personal Information -->
+            <div id="step1" class="step flash-card">
+                <h2 class="text-2xl font-bold text-white mb-2">Personal Information</h2>
+                <p class="text-gray-400 mb-6">Let's start with your basic details</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Age -->
+                    <div class="form-group">
+                        <label for="age" class="text-white">Age</label>
+                        <div class="scroll-input">
+                            <input type="number" id="age" class="form-input text-center text-xl" min="1" max="120" value="25" required>
+                            <div class="flex justify-between mt-2">
+                                <button type="button" onclick="adjustValue('age', -1)" class="bg-primary text-white w-8 h-8 rounded-full">-</button>
+                                <button type="button" onclick="adjustValue('age', 1)" class="bg-primary text-white w-8 h-8 rounded-full">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Height -->
+                    <div class="form-group">
+                        <label for="height" class="text-white">Height (cm)</label>
+                        <div class="scroll-input">
+                            <input type="number" id="height" class="form-input text-center text-xl" min="50" max="250" value="170" required>
+                            <input type="range" id="heightRange" min="50" max="250" value="170" class="mt-3" oninput="updateFromRange('height', this.value)">
+                        </div>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="form-group">
+                        <label for="weight" class="text-white">Weight (kg)</label>
+                        <div class="scroll-input">
+                            <input type="number" id="weight" class="form-input text-center text-xl" min="20" max="200" value="70" required>
+                            <input type="range" id="weightRange" min="20" max="200" value="70" class="mt-3" oninput="updateFromRange('weight', this.value)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BMI Display -->
+                <div id="bmiResult" class="bg-cardbg border border-primary/20 rounded-xl p-6 text-center">
+                    <h3 class="text-lg font-semibold text-white mb-2">Your BMI</h3>
+                    <div id="bmiValue" class="text-4xl font-bold text-primary mb-2">24.22</div>
+                    <div id="bmiCategory" class="text-lg text-secondary">Normal Weight</div>
+                    <div class="text-sm text-gray-400 mt-2">Healthy range: 18.5 - 24.9</div>
+                </div>
+
+                <div class="flex justify-end mt-8">
+                    <button type="button" onclick="nextStep()" class="btn btn-primary px-8">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Diet Preferences -->
+            <div id="step2" class="step flash-card hidden">
+                <h2 class="text-2xl font-bold text-white mb-2">Diet Preferences</h2>
+                <p class="text-gray-400 mb-6">Select your dietary preferences</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <label class="diet-option">
+                        <input type="radio" name="dietPreference" value="vegetarian" class="hidden">
+                        <div class="option-card">
+                            <div class="text-2xl mb-2">🥗</div>
+                            <div class="font-semibold">Vegetarian</div>
+                            <div class="text-sm text-gray-400">Plant-based diet</div>
+                        </div>
+                    </label>
+                    
+                    <label class="diet-option">
+                        <input type="radio" name="dietPreference" value="non-vegetarian" class="hidden">
+                        <div class="option-card">
+                            <div class="text-2xl mb-2">🍗</div>
+                            <div class="font-semibold">Non-Vegetarian</div>
+                            <div class="text-sm text-gray-400">Includes meat</div>
+                        </div>
+                    </label>
+                    
+                    <label class="diet-option">
+                        <input type="radio" name="dietPreference" value="vegan" class="hidden">
+                        <div class="option-card">
+                            <div class="text-2xl mb-2">🌱</div>
+                            <div class="font-semibold">Vegan</div>
+                            <div class="text-sm text-gray-400">No animal products</div>
+                        </div>
+                    </label>
+                    
+                    <label class="diet-option">
+                        <input type="radio" name="dietPreference" value="keto" class="hidden">
+                        <div class="option-card">
+                            <div class="text-2xl mb-2">🥑</div>
+                            <div class="font-semibold">Keto</div>
+                            <div class="text-sm text-gray-400">Low-carb, high-fat</div>
+                        </div>
+                    </label>
+                    
+                    <label class="diet-option">
+                        <input type="radio" name="dietPreference" value="paleo" class="hidden">
+                        <div class="option-card">
+                            <div class="text-2xl mb-2">🥩</div>
+                            <div class="font-semibold">Paleo</div>
+                            <div class="text-sm text-gray-400">Whole foods</div>
+                        </div>
+                    </label>
+                    
+                    <label class="diet-option">
+                        <input type="radio" name="dietPreference" value="mediterranean" class="hidden">
+                        <div class="option-card">
+                            <div class="text-2xl mb-2">🐟</div>
+                            <div class="font-semibold">Mediterranean</div>
+                            <div class="text-sm text-gray-400">Heart-healthy</div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button type="button" onclick="prevStep()" class="btn btn-secondary px-8">Back</button>
+                    <button type="button" onclick="nextStep()" class="btn btn-primary px-8">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Health Conditions -->
+            <div id="step3" class="step flash-card hidden">
+                <h2 class="text-2xl font-bold text-white mb-2">Health Conditions</h2>
+                <p class="text-gray-400 mb-6">Select any health conditions (optional)</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <label class="health-option">
+                        <input type="checkbox" name="healthConditions" value="diabetes" class="hidden">
+                        <div class="option-card">
+                            <div class="font-semibold">Diabetes</div>
+                            <div class="text-sm text-gray-400">Blood sugar management</div>
+                        </div>
+                    </label>
+                    
+                    <label class="health-option">
+                        <input type="checkbox" name="healthConditions" value="hypertension" class="hidden">
+                        <div class="option-card">
+                            <div class="font-semibold">Hypertension</div>
+                            <div class="text-sm text-gray-400">High blood pressure</div>
+                        </div>
+                    </label>
+                    
+                    <label class="health-option">
+                        <input type="checkbox" name="healthConditions" value="pcos" class="hidden">
+                        <div class="option-card">
+                            <div class="font-semibold">PCOS</div>
+                            <div class="text-sm text-gray-400">Polycystic ovary syndrome</div>
+                        </div>
+                    </label>
+                    
+                    <label class="health-option">
+                        <input type="checkbox" name="healthConditions" value="thyroid" class="hidden">
+                        <div class="option-card">
+                            <div class="font-semibold">Thyroid Issues</div>
+                            <div class="text-sm text-gray-400">Hypo/Hyperthyroidism</div>
+                        </div>
+                    </label>
+                    
+                    <label class="health-option">
+                        <input type="checkbox" name="healthConditions" value="heart_disease" class="hidden">
+                        <div class="option-card">
+                            <div class="font-semibold">Heart Disease</div>
+                            <div class="text-sm text-gray-400">Cardiovascular conditions</div>
+                        </div>
+                    </label>
+                    
+                    <label class="health-option">
+                        <input type="checkbox" name="healthConditions" value="kidney_disease" class="hidden">
+                        <div class="option-card">
+                            <div class="font-semibold">Kidney Disease</div>
+                            <div class="text-sm text-gray-400">Renal conditions</div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Custom Health Condition Input -->
+                <div class="form-group">
+                    <label for="customHealth" class="text-white">Other Health Conditions</label>
+                    <input type="text" id="customHealth" class="form-input" placeholder="Add any other health conditions (comma separated)">
+                    <div class="text-sm text-gray-400 mt-1">Separate multiple conditions with commas</div>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button type="button" onclick="prevStep()" class="btn btn-secondary px-8">Back</button>
+                    <button type="button" onclick="nextStep()" class="btn btn-primary px-8">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Fitness Goals & Allergies -->
+            <div id="step4" class="step flash-card hidden">
+                <h2 class="text-2xl font-bold text-white mb-2">Fitness Goals & Allergies</h2>
+                <p class="text-gray-400 mb-6">Tell us about your goals and allergies</p>
+                
+                <!-- Fitness Goals -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-white mb-4">Fitness Goal</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <label class="goal-option">
+                            <input type="radio" name="fitnessGoal" value="weight_loss" class="hidden">
+                            <div class="option-card">
+                                <div class="text-2xl mb-2">⚖️</div>
+                                <div class="font-semibold">Weight Loss</div>
+                                <div class="text-sm text-gray-400">Reduce body weight</div>
+                            </div>
+                        </label>
+                        
+                        <label class="goal-option">
+                            <input type="radio" name="fitnessGoal" value="weight_gain" class="hidden">
+                            <div class="option-card">
+                                <div class="text-2xl mb-2">💪</div>
+                                <div class="font-semibold">Weight Gain</div>
+                                <div class="text-sm text-gray-400">Build muscle mass</div>
+                            </div>
+                        </label>
+                        
+                        <label class="goal-option">
+                            <input type="radio" name="fitnessGoal" value="muscle_building" class="hidden">
+                            <div class="option-card">
+                                <div class="text-2xl mb-2">🏋️</div>
+                                <div class="font-semibold">Muscle Building</div>
+                                <div class="text-sm text-gray-400">Increase strength</div>
+                            </div>
+                        </label>
+                        
+                        <label class="goal-option">
+                            <input type="radio" name="fitnessGoal" value="maintenance" class="hidden">
+                            <div class="option-card">
+                                <div class="text-2xl mb-2">🔄</div>
+                                <div class="font-semibold">Maintenance</div>
+                                <div class="text-sm text-gray-400">Maintain current weight</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Allergies -->
+                <div class="form-group">
+                    <label for="allergies" class="text-white">Allergies</label>
+                    <textarea id="allergies" class="form-input h-24" placeholder="List any food allergies or intolerances (e.g., peanuts, gluten, dairy, shellfish)"></textarea>
+                    <div class="text-sm text-gray-400 mt-1">Separate multiple allergies with commas</div>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button type="button" onclick="prevStep()" class="btn btn-secondary px-8">Back</button>
+                    <button type="submit" class="btn btn-primary px-8">
+                        Complete Profile
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Alert Message -->
+        <div id="alertMessage" class="hidden mt-6"></div>
+    </div>
+
+    <script src="js/preferences.js"></script>
+</body>
+</html>

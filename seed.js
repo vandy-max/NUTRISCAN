@@ -13,7 +13,7 @@ const FoodItemSchema = new Schema({
     fiber: Number,
     sugar: Number,
     sodium: Number,
-    cholesterol: Number,     
+    cholesterol: Number,          
     vitamins: { type: String, default: '[]' },
     minerals: { type: String, default: '[]' },
     health_benefits: String,

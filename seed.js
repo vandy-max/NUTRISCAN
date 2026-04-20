@@ -20,7 +20,7 @@ const FoodItemSchema = new Schema({
     suitable_for: { type: String, default: '[]' },
     allergens: { type: String, default: '[]' }
 });
-
+                                             
 const FoodItem = mongoose.model('FoodItem', FoodItemSchema);
 
 // MongoDB connection URI (should match your server.js)
